@@ -11,7 +11,7 @@ export const load = async ({ locals: { session } }: any) => {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const actions = {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	resetPassword: async ({ request, locals: { supabase } }: any) => {
+	resetPassword: async ({ request, locals: { supabase }, url }: any) => {
 		const formData = await request.formData();
 		const email = formData.get('email') as string;
 
@@ -25,7 +25,7 @@ export const actions = {
 		}
 
 		const { error } = await supabase.auth.resetPasswordForEmail(email, {
-			redirectTo: `${process.env.NODE_ENV === 'production' ? 'https://yourapp.com' : 'http://localhost:5173'}/auth/callback`,
+			redirectTo: `${url.origin}/auth/callback`,
 		});
 
 		if (error) {

@@ -11,7 +11,7 @@ export const load = async ({ locals: { session } }: any) => {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const actions = {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	register: async ({ request, locals: { supabase } }: any) => {
+	register: async ({ request, locals: { supabase }, url }: any) => {
 		const formData = await request.formData();
 		const email = formData.get('email') as string;
 		const password = formData.get('password') as string;
@@ -33,6 +33,9 @@ export const actions = {
 		const { error } = await supabase.auth.signUp({
 			email,
 			password,
+			options: {
+				emailRedirectTo: `${url.origin}/auth/callback`
+			}
 		});
 
 		if (error) {

@@ -64,17 +64,21 @@
 	<main class="dashboard-main">
 		<div class="welcome-section">
 			<h2>
-				{#if data.user.fullName}
+				{#if data.user?.fullName}
 					{data.user.fullName}さん、おかえりなさい！
 				{:else}
 					おかえりなさい！
 				{/if}
 			</h2>
 			<p class="user-info">
-				メールアドレス: <strong>{data.user.email}</strong>
+				メールアドレス: <strong>{data.user?.email}</strong>
 			</p>
 			<p class="user-info">
-				登録日: <strong>{new Date(data.user.createdAt).toLocaleDateString('ja-JP')}</strong>
+				登録日: <strong
+					>{data.user?.createdAt
+						? new Date(data.user.createdAt).toLocaleDateString('ja-JP')
+						: 'N/A'}</strong
+				>
 			</p>
 		</div>
 

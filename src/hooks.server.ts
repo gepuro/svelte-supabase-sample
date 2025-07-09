@@ -75,13 +75,12 @@ const authGuard: Handle = async ({ event, resolve }) => {
 		redirect(303, '/login')
 	}
 
-	// Redirect logged-in users from auth pages to dashboard
+	// Redirect logged-in users from auth pages to top page
 	if (event.locals.session && (
 		event.url.pathname === '/login' || 
-		event.url.pathname === '/register' || 
-		event.url.pathname === '/auth/setup'
+		event.url.pathname === '/register'
 	)) {
-		redirect(303, '/dashboard')
+		redirect(303, '/')
 	}
 
 	return resolve(event)

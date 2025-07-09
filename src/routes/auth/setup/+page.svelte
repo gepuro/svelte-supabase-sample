@@ -1,32 +1,13 @@
 <script lang="ts">
-	import { supabase } from '$lib/supabase.js';
 	import { PUBLIC_SUPABASE_URL } from '$env/static/public';
-	import type { Session } from '@supabase/supabase-js';
+	import type { PageData } from './$types';
+
+	let { data }: { data: PageData } = $props();
 
 	let status = $state({
-		supabaseConnection: 'checking' as 'checking' | 'success' | 'error',
-		redirectUrl: '',
-		currentSession: null as Session | null
-	});
-
-	$effect(() => {
-		// Supabase接続確認
-		(async () => {
-			try {
-				const { data, error } = await supabase.auth.getSession();
-				if (error) {
-					status.supabaseConnection = 'error';
-				} else {
-					status.supabaseConnection = 'success';
-					status.currentSession = data.session;
-				}
-			} catch (err) {
-				status.supabaseConnection = 'error';
-			}
-
-			// リダイレクトURL設定
-			status.redirectUrl = 'http://localhost:5173/auth/callback';
-		})();
+		supabaseConnection: data.connectionStatus === 'Connected' ? 'success' : 'error',
+		redirectUrl: data.redirectUrl,
+		currentSession: data.session
 	});
 
 	function getSupabaseProjectId() {
