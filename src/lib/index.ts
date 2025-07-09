@@ -30,4 +30,4 @@ export * from './services/index.js';
 // ====================
 export type * from './types.js';
 export type * from './database.types.js';
-export * from './utils.js';
+export * from './components/util/index.js';

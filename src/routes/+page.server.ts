@@ -1,7 +1,7 @@
 import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { SampleService } from '$lib/services/sampleService.js';
-import { validateSampleData, sanitizeSampleData } from '$lib/utils.js';
+import { validateSampleData, sanitizeSampleData } from '$lib/components/util/validation.js';
 
 export const load: PageServerLoad = async ({ locals: { supabase, session } }) => {
 	const sampleService = new SampleService(supabase);
