@@ -1,4 +1,4 @@
-export const load = async ({ locals: { session, supabase } }) => {
+export const load = async ({ locals: { user, supabase } }) => {
 	// Test Supabase connection
 	let connectionStatus = 'Connected';
 	try {
@@ -11,7 +11,7 @@ export const load = async ({ locals: { session, supabase } }) => {
 	}
 
 	return {
-		session,
+		user,
 		connectionStatus,
 		redirectUrl: 'http://localhost:5173/auth/callback'
 	};

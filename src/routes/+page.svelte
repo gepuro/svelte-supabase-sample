@@ -37,7 +37,7 @@
 		</header>
 
 		<!-- ナビゲーション -->
-		<Navigation isAuthenticated={!!data.session} />
+		<Navigation isAuthenticated={!!data.user} />
 
 		<!-- Supabaseステータス -->
 		<Status status={data.connectionStatus} />

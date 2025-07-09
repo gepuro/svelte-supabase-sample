@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const load = async ({ locals: { session }, cookies }: any) => {
+export const load = async ({ locals: { user }, cookies }: any) => {
 	return {
-		session,
+		user,
 		cookies: cookies.getAll(),
 	}
 }

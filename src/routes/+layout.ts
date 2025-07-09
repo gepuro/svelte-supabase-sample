@@ -28,17 +28,13 @@ export const load = async ({ data, depends, fetch }: any) => {
 			})
 
 	/**
-	 * It's fine to use `getSession` here, because on the client, `getSession` is
-	 * safe, and on the server, it reads `session` from the `LayoutData`, which
-	 * safely checked the session using `safeGetSession`.
+	 * For complete security, only use getUser() which validates the JWT by 
+	 * contacting the Supabase Auth server. We completely avoid any session
+	 * usage to prevent security warnings.
 	 */
-	const {
-		data: { session },
-	} = await supabase.auth.getSession()
-
 	const {
 		data: { user },
 	} = await supabase.auth.getUser()
 
-	return { session, supabase, user }
+	return { supabase, user }
 }

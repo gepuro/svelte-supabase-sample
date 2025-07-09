@@ -10,7 +10,9 @@
 
 	onMount(() => {
 		const { data: subscription } = supabase.auth.onAuthStateChange(
-			(_: AuthChangeEvent, newSession: Session | null) => {
+			async (event: AuthChangeEvent, newSession: Session | null) => {
+				// Only invalidate if session state actually changed
+				// This avoids using potentially insecure session data directly
 				if (newSession?.expires_at !== session?.expires_at) {
 					invalidate('supabase:auth');
 				}

@@ -7,7 +7,7 @@
 	let status = $state({
 		supabaseConnection: data.connectionStatus === 'Connected' ? 'success' : 'error',
 		redirectUrl: data.redirectUrl,
-		currentSession: data.session
+		currentUser: data.user
 	});
 
 	function getSupabaseProjectId() {
@@ -80,18 +80,18 @@
 
 		<div class="section">
 			<h2>👤 現在の認証状態</h2>
-			{#if status.currentSession}
+			{#if status.currentUser}
 				<div class="status-item">
 					<span class="label">ログイン状態:</span>
 					<span class="status success">✅ ログイン済み</span>
 				</div>
 				<div class="status-item">
 					<span class="label">ユーザーID:</span>
-					<span class="value">{status.currentSession.user?.id}</span>
+					<span class="value">{status.currentUser.id}</span>
 				</div>
 				<div class="status-item">
 					<span class="label">メールアドレス:</span>
-					<span class="value">{status.currentSession.user?.email}</span>
+					<span class="value">{status.currentUser.email}</span>
 				</div>
 			{:else}
 				<div class="status-item">

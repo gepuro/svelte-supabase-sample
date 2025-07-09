@@ -1,50 +1,47 @@
 import { redirect, fail } from '@sveltejs/kit';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const load = async ({ locals: { session, supabase } }: any) => {
-	if (!session) {
+export const load = async ({ locals: { user, supabase } }: any) => {
+	if (!user) {
 		throw redirect(303, '/login');
 	}
 
 	try {
 		// サンプルテーブルからデータを取得
 		const { data: sampleData, error } = await supabase
-			.from('sample_table')
+			.from('sample')
 			.select('*')
 			.limit(10);
 
 		if (error) {
 			console.error('Error fetching sample data:', error);
 			return {
-				session,
 				sampleData: [],
 				error: error.message
 			};
 		}
 
 		return {
-			session,
 			sampleData: sampleData || [],
 			error: null,
 			user: {
-				id: session.user.id,
-				email: session.user.email,
-				fullName: session.user.user_metadata?.full_name || null,
-				createdAt: session.user.created_at
+				id: user.id,
+				email: user.email,
+				fullName: user.user_metadata?.full_name || null,
+				createdAt: user.created_at
 			}
 		};
 	} catch (error) {
 		console.error('Unexpected error in dashboard load:', error);
 		return {
-			session,
 			sampleData: [],
 			error: 'Unexpected error occurred'
 		};
 	}
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const actions = {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	logout: async ({ locals: { supabase } }: any) => {
 		const { error } = await supabase.auth.signOut();
 		if (error) {
@@ -64,7 +61,7 @@ export const actions = {
 		}
 
 		const { error } = await supabase
-			.from('sample_table')
+			.from('sample')
 			.insert([{ name, description }]);
 
 		if (error) {

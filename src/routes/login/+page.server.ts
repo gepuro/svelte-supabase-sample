@@ -1,14 +1,13 @@
 import { fail, redirect } from '@sveltejs/kit';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const load = async ({ locals: { session } }: any) => {
-	if (session) {
+export const load = async ({ locals: { user } }: any) => {
+	if (user) {
 		throw redirect(303, '/dashboard');
 	}
 	return {};
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const actions = {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	login: async ({ request, locals: { supabase } }: any) => {

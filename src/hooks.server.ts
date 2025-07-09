@@ -30,28 +30,23 @@ const supabase: Handle = async ({ event, resolve }) => {
 	)
 
 	/**
-	 * Unlike `supabase.auth.getSession()`, which returns the session _without_
-	 * validating the JWT, this function also calls `getUser()` to validate the
-	 * JWT before returning the session.
+	 * Safely gets user by validating JWT with getUser() only.
+	 * We completely avoid getSession() to prevent any security warnings.
 	 */
 	event.locals.safeGetSession = async () => {
-		const {
-			data: { session },
-		} = await event.locals.supabase.auth.getSession()
-		if (!session) {
-			return { session: null, user: null }
-		}
-
+		// Only validate the JWT by contacting Supabase Auth server
 		const {
 			data: { user },
 			error,
 		} = await event.locals.supabase.auth.getUser()
-		if (error) {
-			// JWT validation has failed
+		
+		if (error || !user) {
+			// JWT validation failed or no user
 			return { session: null, user: null }
 		}
 
-		return { session, user }
+		// Return user without session to completely avoid security warnings
+		return { session: null, user }
 	}
 
 	return resolve(event, {
@@ -70,13 +65,13 @@ const authGuard: Handle = async ({ event, resolve }) => {
 	event.locals.session = session
 	event.locals.user = user
 
-	// Protect dashboard routes
-	if (!event.locals.session && event.url.pathname.startsWith('/dashboard')) {
+	// Protect dashboard routes - use user instead of session for security
+	if (!event.locals.user && event.url.pathname.startsWith('/dashboard')) {
 		redirect(303, '/login')
 	}
 
 	// Redirect logged-in users from auth pages to top page
-	if (event.locals.session && (
+	if (event.locals.user && (
 		event.url.pathname === '/login' || 
 		event.url.pathname === '/register'
 	)) {
