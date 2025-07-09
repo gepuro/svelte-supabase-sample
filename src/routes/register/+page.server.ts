@@ -39,9 +39,9 @@ export const actions = {
 
 		if (error) {
 			console.error('Registration error:', error);
-			
+
 			let errorMessage = 'アカウント作成に失敗しました。';
-			
+
 			if (error.message.includes('User already registered')) {
 				errorMessage = 'このメールアドレスは既に登録されています。';
 			} else if (error.message.includes('Password should be at least')) {

@@ -8,10 +8,7 @@ export const load = async ({ locals: { user, supabase } }: any) => {
 
 	try {
 		// サンプルテーブルからデータを取得
-		const { data: sampleData, error } = await supabase
-			.from('sample')
-			.select('*')
-			.limit(10);
+		const { data: sampleData, error } = await supabase.from('sample').select('*').limit(10);
 
 		if (error) {
 			console.error('Error fetching sample data:', error);
@@ -60,9 +57,7 @@ export const actions = {
 			return fail(400, { message: 'Name and description are required' });
 		}
 
-		const { error } = await supabase
-			.from('sample')
-			.insert([{ name, description }]);
+		const { error } = await supabase.from('sample').insert([{ name, description }]);
 
 		if (error) {
 			console.error('Error creating record:', error);

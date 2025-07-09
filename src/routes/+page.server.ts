@@ -5,7 +5,7 @@ import { validateSampleData, sanitizeSampleData } from '$lib/components/util/val
 
 export const load: PageServerLoad = async ({ locals: { supabase, session } }) => {
 	const sampleService = new SampleService(supabase);
-	
+
 	try {
 		const connectionStatus = await sampleService.getConnectionStatus();
 		const { data: samples, error } = await sampleService.getSamples();
@@ -31,7 +31,7 @@ export const actions: Actions = {
 	add: async ({ request, locals: { supabase } }) => {
 		const sampleService = new SampleService(supabase);
 		const formData = await request.formData();
-		
+
 		const rawData = {
 			name: formData.get('name')?.toString() || '',
 			description: formData.get('description')?.toString() || ''
@@ -45,9 +45,9 @@ export const actions: Actions = {
 
 		// データのサニタイズ
 		const sanitizedData = sanitizeSampleData(rawData);
-		
+
 		const result = await sampleService.addSample(sanitizedData);
-		
+
 		if (!result.success) {
 			return fail(500, { error: result.error });
 		}
@@ -70,7 +70,7 @@ export const actions: Actions = {
 		}
 
 		const result = await sampleService.deleteSample(parsedId);
-		
+
 		if (!result.success) {
 			return fail(500, { error: result.error });
 		}

@@ -24,7 +24,10 @@ export const load = async ({ url, locals: { supabase } }: any) => {
 			throw redirect(303, '/dashboard');
 		} catch (err) {
 			console.error('Unexpected error during code exchange:', err);
-			throw redirect(303, `/login?error=${encodeURIComponent('認証処理中にエラーが発生しました。')}`);
+			throw redirect(
+				303,
+				`/login?error=${encodeURIComponent('認証処理中にエラーが発生しました。')}`
+			);
 		}
 	}
 

@@ -25,7 +25,7 @@ export const actions = {
 		}
 
 		const { error } = await supabase.auth.resetPasswordForEmail(email, {
-			redirectTo: `${url.origin}/auth/callback`,
+			redirectTo: `${url.origin}/auth/callback`
 		});
 
 		if (error) {
@@ -33,6 +33,9 @@ export const actions = {
 			return fail(400, { error: 'パスワードリセットメールの送信に失敗しました。' });
 		}
 
-		return { success: true, message: 'パスワードリセットメールを送信しました。メールをご確認ください。' };
+		return {
+			success: true,
+			message: 'パスワードリセットメールを送信しました。メールをご確認ください。'
+		};
 	}
 };

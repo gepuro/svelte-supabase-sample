@@ -21,14 +21,14 @@ export const actions = {
 
 		const { error } = await supabase.auth.signInWithPassword({
 			email,
-			password,
+			password
 		});
 
 		if (error) {
 			console.error('Login error:', error);
-			
+
 			let errorMessage = 'ログインに失敗しました。';
-			
+
 			if (error.message.includes('Invalid login credentials')) {
 				errorMessage = 'メールアドレスまたはパスワードが正しくありません。';
 			} else if (error.message.includes('Email not confirmed')) {

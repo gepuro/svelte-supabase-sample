@@ -16,6 +16,7 @@ Everything you need to build a Svelte project with Supabase integration, powered
 This project includes a complete authentication system with the following pages:
 
 ### Available Routes:
+
 - `/` - Home page with navigation
 - `/register` - User registration
 - `/login` - User login
@@ -23,6 +24,7 @@ This project includes a complete authentication system with the following pages:
 - `/dashboard` - Protected user dashboard (requires authentication)
 
 ### Authentication Features:
+
 - **User Registration**: Email/password with confirmation
 - **Login**: Secure authentication with session management
 - **Password Reset**: Email-based password recovery
@@ -150,6 +152,7 @@ PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
 ### 2. Authentication Setup
 
 In your Supabase dashboard:
+
 1. Go to Authentication > Settings
 2. Enable email confirmation if desired
 3. Configure email templates (optional)
@@ -186,36 +189,41 @@ Your app will be available at `http://localhost:5173` (or another port if 5173 i
 ## 🎯 Usage Examples
 
 ### User Registration
+
 ```typescript
 // In your component
 import { supabase } from '$lib/supabase.js';
 
 const { error } = await supabase.auth.signUp({
-  email: 'user@example.com',
-  password: 'password123',
-  options: {
-    data: {
-      full_name: 'John Doe'
-    }
-  }
+	email: 'user@example.com',
+	password: 'password123',
+	options: {
+		data: {
+			full_name: 'John Doe'
+		}
+	}
 });
 ```
 
 ### User Login
+
 ```typescript
 const { data, error } = await supabase.auth.signInWithPassword({
-  email: 'user@example.com',
-  password: 'password123'
+	email: 'user@example.com',
+	password: 'password123'
 });
 ```
 
 ### Check Authentication Status
+
 ```typescript
 import { supabase } from '$lib/supabase.js';
 
-const { data: { user } } = await supabase.auth.getUser();
+const {
+	data: { user }
+} = await supabase.auth.getUser();
 if (user) {
-  // User is authenticated
+	// User is authenticated
 }
 ```
 
