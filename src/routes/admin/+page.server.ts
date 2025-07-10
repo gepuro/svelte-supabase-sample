@@ -21,12 +21,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 	}
 
 	try {
-		console.log('🔍 Supabase Admin 接続テスト開始...');
-		console.log('URL:', PUBLIC_SUPABASE_URL);
-		console.log('Service Role Key設定済み:', !!SUPABASE_SERVICE_ROLE_KEY);
-		
 		// 管理者権限でユーザー一覧を取得
-		console.log('📋 ユーザー一覧取得を試行中...');
 		const { data: users, error: usersError } = await supabaseAdmin.auth.admin.listUsers();
 
 		if (usersError) {
@@ -38,28 +33,11 @@ export const load: PageServerLoad = async ({ locals }) => {
 			error(500, 'ユーザーデータの取得に失敗しました');
 		}
 		
-		console.log('✅ ユーザー一覧取得成功:', users.users?.length || 0, 'ユーザー');
-
-		// デバッグ用：ユーザーオブジェクトの構造を確認
-		if (users.users && users.users.length > 0) {
-			console.log('ユーザーオブジェクトの構造:', JSON.stringify(users.users[0], null, 2));
-		}
-
 		// サンプルテーブルのデータを取得
-		console.log('📊 サンプルデータ取得を試行中...');
 		const { data: sampleData, error: sampleError } = await supabaseAdmin
 			.from('sample')
 			.select('*')
 			.order('created_at', { ascending: false });
-
-		if (sampleError) {
-			console.error('❌ サンプルデータの取得エラー:', {
-				message: sampleError.message,
-				details: sampleError
-			});
-		} else {
-			console.log('✅ サンプルデータ取得成功:', sampleData?.length || 0, '件');
-		}
 
 		// 統計情報を取得
 		const totalUsers = users.users?.length || 0;
