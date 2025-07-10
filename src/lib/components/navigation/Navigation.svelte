@@ -2,14 +2,16 @@
 	interface NavLink {
 		href: string;
 		label: string;
-		variant: 'register' | 'login' | 'dashboard' | 'setup';
+		variant: 'register' | 'login' | 'dashboard' | 'setup' | 'admin';
 	}
 
 	interface Props {
 		isAuthenticated: boolean;
+		isAdmin?: boolean;
+		userEmail?: string;
 	}
 
-	let { isAuthenticated }: Props = $props();
+	let { isAuthenticated, isAdmin = false, userEmail }: Props = $props();
 
 	const links: NavLink[] = [
 		...(isAuthenticated
@@ -19,7 +21,8 @@
 					{ href: '/login', label: 'ログイン', variant: 'login' as const }
 				]),
 		{ href: '/dashboard', label: 'ダッシュボード', variant: 'dashboard' as const },
-		{ href: '/auth/setup', label: '認証設定確認', variant: 'setup' as const }
+		{ href: '/auth/setup', label: '認証設定確認', variant: 'setup' as const },
+		...(isAdmin ? [{ href: '/admin', label: '🛡️ 管理者ページ', variant: 'admin' as const }] : [])
 	];
 
 	const variantClasses = {
@@ -30,7 +33,9 @@
 		dashboard:
 			'bg-gradient-to-r from-red-400 to-yellow-400 text-white shadow-lg hover:shadow-red-500/25',
 		setup:
-			'bg-gradient-to-r from-gray-500 to-gray-600 text-white shadow-lg hover:shadow-gray-500/25'
+			'bg-gradient-to-r from-gray-500 to-gray-600 text-white shadow-lg hover:shadow-gray-500/25',
+		admin:
+			'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg hover:shadow-red-500/25 border border-red-400'
 	};
 </script>
 

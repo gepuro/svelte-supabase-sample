@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Database } from '$lib/database.types.js';
-	import Card from './Card.svelte';
+	import SampleCard from './SampleCard.svelte';
 
 	type SampleRow = Database['public']['Tables']['sample']['Row'];
 
@@ -47,7 +47,7 @@
 	{:else}
 		<div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
 			{#each samples as sample (sample.id)}
-				<Card {sample} {loading} />
+				<SampleCard {sample} {loading} />
 			{/each}
 		</div>
 	{/if}

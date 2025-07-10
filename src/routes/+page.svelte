@@ -37,7 +37,11 @@
 		</header>
 
 		<!-- ナビゲーション -->
-		<Navigation isAuthenticated={!!data.user} />
+		<Navigation
+			isAuthenticated={!!data.user}
+			isAdmin={data.user?.email?.endsWith('@admin.com') || data.user?.email === 'gepuro@gmail.com'}
+			userEmail={data.user?.email}
+		/>
 
 		<!-- Supabaseステータス -->
 		<Status status={data.connectionStatus} />
