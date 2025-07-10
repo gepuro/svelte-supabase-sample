@@ -9,3 +9,6 @@ export { formatErrorMessage, formatDate } from './formatting.js';
 
 // Common utilities
 export { debounce } from './common.js';
+
+// Icons and styles
+export { iconPaths, statusClasses, alertClasses } from './icons.js';

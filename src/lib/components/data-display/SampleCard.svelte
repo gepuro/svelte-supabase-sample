@@ -2,6 +2,7 @@
 	import { enhance } from '$app/forms';
 	import type { Database } from '$lib/database.types.js';
 	import Button from '../general/Button.svelte';
+	import Card from './Card.svelte';
 
 	type SampleRow = Database['public']['Tables']['sample']['Row'];
 
@@ -24,9 +25,7 @@
 </script>
 
 {#if sample}
-	<div
-		class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition-shadow duration-200 hover:shadow-md"
-	>
+	<Card>
 		<div class="mb-3 flex items-start justify-between">
 			<h4 class="truncate pr-4 text-lg font-semibold text-gray-900">{sample.name}</h4>
 			<form
@@ -74,9 +73,9 @@
 			</svg>
 			作成日: {formattedDate}
 		</div>
-	</div>
+	</Card>
 {:else}
-	<div class="rounded-lg border border-gray-200 bg-gray-50 p-6 shadow-sm">
+	<Card class="bg-gray-50">
 		<p class="text-gray-500">データを読み込み中...</p>
-	</div>
+	</Card>
 {/if}
